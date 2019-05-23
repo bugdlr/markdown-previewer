@@ -46,17 +46,22 @@ And here. | Okay. | I think we get it.
 1. Use just 1s if you want!
 1. But the list goes on...
 - Even if you use dashes or asterisks.
-`;
+* And last but not least, let's not forget embedded images:
 
+![React Logo w/ Text](https://goo.gl/Umyytc)
+`
+;
 
+marked.setOptions({
+  breaks: true,
+});
 
 class App extends Component {
     constructor(props) {
       super(props)
 
       this.state = {
-        input: placeholder,
-        markdown: marked(placeholder)
+        input: placeholder
       }
 
       this.handleChange = this.handleChange.bind(this);
@@ -64,24 +69,26 @@ class App extends Component {
 
     handleChange (input) {
       this.setState({
-        input,
-        markdown: marked(input)
+        input
       })
+    }
+
+    createMarkup(input) {
+      return {
+        __html: marked(input)
+      }
     }
 
   render() {
     return (
       <div className="App">
-
         <Editor input={this.state.input} handleChange={this.handleChange}/>
-        <Preview markdown={this.state.markdown}/>
+        <Preview input={this.state.input} createMarkup={this.createMarkup}/>
       </div>
 
     );
   }
 }
-
-
 
 
 export default App;
